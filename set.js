@@ -12,8 +12,7 @@ module.exports = {
     OWNER: process.env.NUMERO_OWNER ? process.env.NUMERO_OWNER.split(",") : ["242055759975"],
 
     // Base de données (PostgreSQL, SQLite, etc.)
-    DATABASE: process.env.DATABASE || 'postgresql://postgres:password@localhost:5432/neo_engine_5',
-
+    DATABASE: process.env.DATABASE || 'postgresql://postgres:S7gZWH#kVFz8V-G@aws-0-eu-west-1.pooler.supabase.com:5432/neo_engine_5' , 
     // Activation du message de bienvenue
     WELCOME: process.env.WELCOME || 'oui',
 
