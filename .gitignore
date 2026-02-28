@@ -1,0 +1,15 @@
+# Node modules (ne pas versionner)
+node_modules/
+
+# Fichiers de cache de Baileys ou autres
+cache_jid.json
+*.log
+
+# Dossiers de session WhatsApp (optionnel si tu veux persister dans Docker)
+auth/
+
+# Téléchargements
+downloads/
+
+# Configurations locales / secrets
+.env 
