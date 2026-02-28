@@ -3,7 +3,7 @@ module.exports = {
     SESSION_ID: process.env.SESSION_ID || 'neo_engine_5',
 
     // Préfixe des commandes
-    PREFIX: process.env.PREFIX || "#",
+    PREFIX: process.env.PREFIX || "+",
 
     // Mode du bot : public ou privé
     MODE: process.env.MODE_PUBLIC || "public",
