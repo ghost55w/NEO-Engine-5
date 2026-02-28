@@ -18,7 +18,7 @@ const {
   connection_update,
   dl_save_media_ms,
   recup_msg
-} = require('./Ov_events');
+} = require('./Ovl_events');
 
 async function main() {
   try {
