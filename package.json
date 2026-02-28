@@ -1,0 +1,24 @@
+{
+  "name": "neo-engine-5",
+  "version": "5.0.0",
+  "description": "Bot WhatsApp multi-appareil NEO ENGINE 5, stable et modulable",
+  "main": "index.js",
+  "scripts": {
+    "start": "pm2 start index.js --name neo-engine-5 --attach",
+    "stop": "pm2 stop neo-engine-5",
+    "restart": "pm2 restart neo-engine-5"
+  },
+  "keywords": ["NEO ENGINE 5", "Whatsapp", "Baileys", "Bot", "Multi-device"],
+  "author": "NEO",
+  "license": "MIT",
+  "dependencies": {
+    "@whiskeysockets/baileys": "^7.18.0",
+    "axios": "^1.6.0",
+    "express": "^4.18.2",
+    "file-type": "^17.1.0",
+    "pino": "^8.16.0",
+    "pm2": "^6.2.0",
+    "sqlite3": "^5.1.8",
+    "sequelize": "^6.38.0"
+  }
+}
