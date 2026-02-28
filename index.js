@@ -11,7 +11,7 @@ const {
 } = require('@whiskeysockets/baileys');
 
 const config = require('./set'); // NEO ENGINE 5 config
-const { get_session, restoreAuth } = require('./DataBase/session');
+const { get_session, restoreAuth } = require('./Database/session');
 const {
   message_upsert,
   group_participants_update,
