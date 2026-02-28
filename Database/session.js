@@ -1,64 +1,62 @@
 const fs = require('fs');
 const path = require('path');
 const { Sequelize, DataTypes } = require('sequelize');
-const config = require('../set');
 
-// --------------------
-// Connexion PostgreSQL
-// --------------------
+// ⚠️ Corrigé : mot de passe encodé (%40 pour @)
 const sequelize = new Sequelize(
-  config.DATABASE,
+  'postgres://postgres.mkvywsrvpbngcaabihlb:database%40passWord1@aws-0-eu-north-1.pooler.supabase.com:6543/postgres',
   {
     dialect: 'postgres',
-    ssl: true,
     protocol: 'postgres',
     dialectOptions: {
       native: true,
       ssl: { require: true, rejectUnauthorized: false },
     },
     logging: false,
-    pool: {
-      max: 10,
-      min: 0,
-      acquire: 30000,
-      idle: 10000,
-    },
   }
 );
 
-// --------------------
-// Définition du modèle Session
-// --------------------
+// Définition de la table sessions
 const Session = sequelize.define('Session', {
-  id: { type: DataTypes.STRING, primaryKey: true },
-  content: { type: DataTypes.TEXT, allowNull: false },
-  keys: { type: DataTypes.TEXT, allowNull: false },
-  createdAt: { type: DataTypes.DATE, allowNull: false },
+  id: {
+    type: DataTypes.STRING,
+    primaryKey: true,
+  },
+  content: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  keys: {
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  createdAt: {
+    type: DataTypes.DATE,
+    allowNull: false,
+  },
 }, {
   tableName: 'sessions',
   timestamps: false,
 });
 
-// --------------------
-// Synchronisation table
-// --------------------
-async function initSessions() {
+// ⚡ Synchronisation DB
+(async () => {
   try {
+    await sequelize.authenticate();
+    console.log('Connexion à la DB réussie !');
     await Session.sync();
-    console.log("Table 'sessions' synchronisée avec succès.");
+    console.log('Table sessions prête !');
   } catch (err) {
-    console.error("Erreur lors de la synchronisation des sessions:", err.message);
+    console.error('Erreur de connexion DB :', err);
   }
-}
+})();
 
-// --------------------
-// Récupérer une session par ID
-// --------------------
+// Récupère une session depuis la DB
 async function get_session(id) {
   const session = await Session.findByPk(id);
   if (!session) return null;
 
-  session.createdAt = new Date(); // mise à jour de la dernière activité
+  session.createdAt = new Date();
   await session.save();
 
   return {
@@ -67,9 +65,7 @@ async function get_session(id) {
   };
 }
 
-// --------------------
-// Restaure la session dans les fichiers auth pour Baileys
-// --------------------
+// Restaure les fichiers d’auth
 async function restaureAuth(instanceId, creds, keys) {
   const authDir = path.join(__dirname, '../auth');
   if (!fs.existsSync(authDir)) fs.mkdirSync(authDir, { recursive: true });
@@ -77,10 +73,8 @@ async function restaureAuth(instanceId, creds, keys) {
   const sessionDir = path.join(authDir, instanceId);
   if (!fs.existsSync(sessionDir)) fs.mkdirSync(sessionDir, { recursive: true });
 
-  // Sauvegarde des credentials
   fs.writeFileSync(path.join(sessionDir, 'creds.json'), JSON.stringify(creds, null, 2));
 
-  // Sauvegarde de chaque key individuellement
   if (keys && Object.keys(keys).length > 0) {
     for (const keyFile in keys) {
       fs.writeFileSync(
@@ -91,7 +85,7 @@ async function restaureAuth(instanceId, creds, keys) {
   }
 }
 
-// --------------------
-// Exports
-// --------------------
-module.exports = { Session, initSessions, get_session, restaureAuth, sequelize };
+module.exports = {
+  get_session,
+  restaureAuth,
+};
