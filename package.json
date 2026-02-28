@@ -12,13 +12,11 @@
   "author": "NEO",
   "license": "MIT",
   "dependencies": {
-    "@whiskeysockets/baileys": "^7.18.0",
-    "axios": "^1.6.0",
+    "@whiskeysockets/baileys": "^6.7.8",
+    "sequelize": "^6.37.0",
+    "pg": "^8.11.3",
+    "sqlite3": "^5.1.6",
     "express": "^4.18.2",
-    "file-type": "^17.1.0",
-    "pino": "^8.16.0",
-    "pm2": "^6.2.0",
-    "sqlite3": "^5.1.8",
-    "sequelize": "^6.38.0"
+    "file-type": "^18.5.0"
   }
 }
